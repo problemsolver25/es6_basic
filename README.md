@@ -1,5 +1,5 @@
 ## Basic ES6
-introduced several fundamental features that have become standard in modern JavaScript development.
+ES6 introduced several fundamental features that have become standard in modern JavaScript development.
 
 ### Install & Run
 `npm install -g http-server`
