@@ -33,6 +33,9 @@ console.log("magic(): ",magic());
 
 console.log(" === Write Arrow Functions with Parameters === ");
 
+const checkEven = (num) => (num % 2 === 0 ? "Even" : "Odd");
+console.log("checkEven(7)", checkEven(7)); // "Odd"
+
 // Just like a regular function, you can pass arguments into an arrow function.
 
 const doubler = (item) => item * 2;
@@ -218,6 +221,113 @@ for (let val of [10, 20, 30]) {
   console.log(val); // 10, 20, 30
 }
 
+console.log(" === forEach === ")
+// Loop through an array and execute a function for each element.
+const arr3 = [1, 2, 3];
+console.log("arr3: ", arr3);
+arr3.forEach((item, index) => {
+  console.log("index: ",index, "item: ", item);
+});
+
+console.log(" === map === ")
+// Create a new array by transforming each element of an existing array.
+const numbers1 = [1, 2, 3];
+console.log("number1: ",numbers1);
+const doubled = numbers1.map(n => n * 2);
+console.log("map() doubled: ", doubled); // [2, 4, 6]
+
+console.log(" === filter === ")
+// Create a new array with only the elements that satisfy a condition.
+// Returns a new array of sub-arrays without mutating the original.
+const evens = numbers1.filter(n => n % 2 === 0);
+console.log("filter() evens: ", evens); // [2]
+
+console.log(" === indexOf === ")
+const fruits = ["apple", "banana", "mango"];
+console.log("fruits: ",fruits);
+// Find the first index of a value in an array (or -1 if not found).
+console.log("indexOf(banana)", fruits.indexOf("banana")); // 1
+console.log("indexOf(grape)", fruits.indexOf("grape"));  // -1
+
+console.log(" === every === ")
+// Test whether all elements of an array satisfy a condition. Returns true or false.
+const numbers2 = [2, 4, 6];
+console.log("number2: ",numbers2);
+const allEven = numbers2.every(n => n % 2 === 0);
+console.log("numbers2.every() allEven?: ", allEven); // true
+console.log("numbers1.every() allEven?: ", numbers1.every(n => n % 2 === 0)); 
+
+function filteredArray(arr, elem) {
+  return arr.map(subArr => subArr.filter(item => item !== elem));
+}
+console.log("filteredArray() ", filteredArray([[3, 2, 3], [1, 6, 3], [3, 13, 26], [19, 3, 9]], 3));
+
+function filteredArray1(arr, elem) {
+  // Keep only sub-arrays that do NOT include 'elem'
+  return arr.filter(subArr => !subArr.includes(elem));
+}
+console.log("filteredArray1() ", filteredArray1([[10, 8, 3], [14, 6, 23], [3, 18, 6]], 18))
+
+const foods = {
+  apples: 25,
+  oranges: 32,
+  plums: 28
+};
+foods.bananas = 13;
+foods["grapes"] = 35;
+const strawberriesKey = "strawberries";
+foods[strawberriesKey] = 27;
+console.log(foods);
+
+console.log(" === in operator === ");
+// The in operator returns true if the specified property is in the specified object or its prototype chain.
+let obj3 = { A: 10, B: 20 };
+console.log("obj3: ", obj3);
+console.log("'A' in obj3: ", 'A' in obj3); // true
+console.log("'C' in obj3: ", 'C' in obj3); // false
+// Even inherited properties are counted
+console.log('toString' in obj3); // true, because it exists on Object.prototype
+
+console.log(" === hasOwnProperty === ");
+// The hasOwnProperty() method returns a boolean indicating whether the object has the specified property
+// as its own property (as opposed to inheriting it).
+let obj4 = { A: 10, B: 20 };
+console.log("obj4: ", obj4);
+console.log("A?: ", obj4.hasOwnProperty('A')); // true
+console.log("C?: ", obj4.hasOwnProperty('C')); // false
+console.log("toString?: ", obj4.hasOwnProperty('toString')); // false, not a direct property
+
+console.log(" === Object.keys() === ");
+let users = {
+  Alan: {
+    age: 27,
+    online: false
+  },
+  Jeff: {
+    age: 32,
+    online: true
+  },
+  Sarah: {
+    age: 48,
+    online: false
+  },
+  Ryan: {
+    age: 19,
+    online: true
+  }
+};
+console.log("users: ", users);
+
+console.log("Object.keys(users): ", Object.keys(users));
+console.log("Object.keys(users.Jeff): ", Object.keys(users.Jeff));
+console.log("Object.keys(['user 1', 123, 'user 2']): ", Object.keys(['user 1', 123, 'user 2']));
+
+console.log(" === Object.values() === ");
+// The Object.values() method returns an array of a given object's own enumerable property values,
+console.log("Object.values(users): ", Object.values(users));
+console.log("Object.values(users.Jeff): ", Object.values(users.Jeff));
+console.log("Object.values(['user 1', 123, 'user 2']): ", Object.values(['user 1', 123, 'user 2']));
+
 console.log(" === Set === ");
 // A Set is a collection of values, 
 // where each value must be unique. 
@@ -269,7 +379,10 @@ console.log(Object.assign(obj1, obj2)); // {a:1, b:2}
 const merged = {...obj1, ...obj2};
 console.log(merged); // {a:1, b:2}
 
+//  the basic principles of OOP in JavaScript, including the this keyword, prototype chains, constructors, and inheritance.
+
 console.log(" === Write Concise Declarative Functions with ES6 === ");
+// constructor function Inside Object Methods
 // Write Concise Declarative Functions with ES6:
 // When defining functions within objects in ES5, we have to use the keyword function as follows:
 
@@ -298,6 +411,175 @@ const bicycle = {
 // Only change code above this line
 bicycle.setGear(3);
 console.log("bicycle.gear: ",bicycle.gear);
+
+console.log(" === constructor function === ");
+// The constructor function is a special function that creates and initializes an object instance of a class.
+// create new object using a constructor function, Inside Constructor Functions or Classes
+function Dog() {
+  this.name = "xyz";
+  this.color = "brown";
+  this.numLegs = 4;
+}
+Dog.prototype.breed = "abc";
+
+Dog.prototype = {
+  constructor: Dog, // to avoid prototype being set to Object
+  numLegs: 2, // overriding
+  // Example method 
+  eat: function() {
+    console.log("nom nom nom");
+  },
+  describe: function() {
+    console.log("My name is " + this.name);
+  }
+};
+
+const myDog = new Dog();
+console.log(myDog.name);     // "xyz"
+console.log(myDog.color);    // "brown"
+console.log(myDog.numLegs);  // 4
+console.log(myDog instanceof Dog); // true
+console.log(myDog.constructor === Dog); // true
+console.log(myDog.breed)  // "abc"
+// Dog.prototype.isPrototypeOf(myDog) tests whether Dog.prototype exists in the prototype chain of myDog.
+console.log(Dog.prototype.isPrototypeOf(myDog)); // true
+// prototype chain
+console.log(Object.prototype.isPrototypeOf(Dog.prototype)); // true
+
+console.log(" === Use class Syntax to Define a Constructor Function === ");
+class Dog {
+  constructor(name = "xyz", color = "brown", numLegs = 4) {
+    this.name = name;
+    this.color = color;
+    this.numLegs = numLegs;
+  }
+
+  // Example method
+  bark() {
+    console.log(`${this.name} says Woof!`);
+  }
+}
+
+// Create a new dog object
+const myDog1 = new Dog();
+console.log(myDog1.name);     // "xyz"
+console.log(myDog1.color);    // "brown"
+console.log(myDog1.numLegs);  // 4
+
+myDog1.bark();                // "xyz says Woof!"
+
+console.log(" === Inherit Behaviors from a Supertype === ");
+// Inheritance is a way for one class to extend another class.
+// This allows you to take an existing class and
+// create a new class with additional properties or methods.
+// The class being inherited from is called the supertype,
+// and the class that inherits is called the subtype.
+// In JavaScript, the subtypes will have access to all the methods and properties of their supertypes.
+function Animal() { }
+
+Animal.prototype = {
+  constructor: Animal,
+  eat: function() {
+    console.log("nom nom nom");
+  }
+};
+
+function Dog(name) {
+  this.name = name;
+}
+// Make Dog inherit from Animal
+Dog.prototype = Object.create(Animal.prototype);
+// Reset constructor property to Dog
+Dog.prototype.constructor = Dog;
+// Add methods specific to Dog
+Dog.prototype.bark = function() {
+  console.log("Woof!");
+};
+// overriding
+Dog.prototype.eat = function() {
+  console.log(this.name + " says Woof! and nom nom nom");
+};
+
+// Create an instance
+const myDog3 = new Dog("Rex");
+console.log(myDog3.name);  // "Rex"
+myDog3.eat();              // "Rex says Woof! and nom nom nom"
+myDog3.bark();             // "Woof!"
+
+console.log(" === Use a Mixin to Add Common Behavior Between Unrelated Objects === ");
+// A mixin allows other classes to use a collection of functions.
+// This allows for the functionality to be shared between classes that don't share a parent class.
+let bird = {
+  name: "Donald",
+  numLegs: 2
+};
+
+let boat = {
+  name: "Warrior",
+  type: "race-boat"
+};
+
+// Only change code below this line
+let glideMixin = function(obj) {
+  obj.glide = function() {
+    console.log("Flying, wooosh!");
+  }
+};
+
+glideMixin(bird);
+glideMixin(boat);
+
+bird.glide();
+boat.glide();
+
+console.log(" === Use Closure to Protect Properties Within an Object from Being Modified Externally === ");
+// A common pattern in JavaScript is to create a module that encapsulates some data and 
+// provides methods that allow outside code to interact with that data safely.
+// This is often accomplished by using closures.
+function Bird() {
+  let weight = 15;
+
+  this.getWeight  = function() { 
+    return weight;
+  };
+
+}
+
+let ducky = new Bird();
+console.log("ducky.getWeight(): ", ducky.getWeight());
+
+console.log(" === Invoked Function Expression (IIFE) === ");
+// An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined.
+(function () {
+  console.log("A cozy nest is ready");
+})();
+// The purpose of the IIFE is to obtain data privacy 
+// because any variables declared within the IIFE cannot be accessed by the outside world.
+
+console.log(" === Use an IIFE to Create a Module === ");
+// A common pattern in JavaScript is to use an IIFE to create a module.
+// A module is a group of related variables and functions that are encapsulated together.
+// An immediately invoked function expression (IIFE) is often used to group related functionality into a single object or module.
+let funModule = (function () {
+  return {
+    isCuteMixin: function(obj) {
+      obj.isCute = function() {
+        return true;
+      };
+    },
+    singMixin: function(obj) {
+      obj.sing = function() {
+        console.log("Singing to an awesome tune");
+      };
+    }
+  }
+})();
+let duck = {}; // define the object first
+// Apply the mixins
+funModule.isCuteMixin(duck);
+funModule.singMixin(duck);
+console.log(duck.isCute()); // true
+duck.sing(); // "Singing to an awesome tune"
 
 console.log(" === Write Concise Object Literal Declarations Using Object Property Shorthand === ");
 // ES6 adds some nice support for easily defining object literals.
@@ -723,3 +1005,708 @@ loadData();
 // Instead of blocking the whole program, JavaScript sets them aside and keeps running the rest of the code.
 // When the long task is finished, its result is handled later (in the future).
 // This is done with callbacks, promises, or async/await.
+
+console.log(" === Factorialize a Number === ");
+function factorialize(num) {
+  return num<=0 ? 1 : num * factorialize(num-1);
+}
+console.log("factorialize(5): ", factorialize(5));
+console.log("factorialize(0): ", factorialize(0));
+console.log("factorialize(1): ", factorialize(1));
+console.log("factorialize(-5): ", factorialize(-5));
+
+console.log(" === Reverse a String === ");
+function reverseString(str) {
+  return str.split("").reverse().join("");
+}
+console.log("reverseString('hello'): ", reverseString('hello'));
+
+console.log(" === Find the Longest Word in a String and Return its Length === ");
+function findLongestWordLength(str) {
+  // Split string into words
+  let words = str.split(' ');
+
+  // Use reduce to find the longest word length
+  let longestLength = words.reduce((max, word) => {
+    return Math.max(max, word.length);
+  }, 0);
+
+  return longestLength;
+}
+console.log(findLongestWordLength('The quick brown fox jumped over the lazy dog')); // 6
+
+console.log(" === Find the Longest Word in a String === ");
+function findLongestWord(str) {
+  // Split string into words
+  let words = str.split(' ');
+
+  // Use reduce to keep the longest word
+  let longestWord = words.reduce((longest, current) => {
+    return current.length > longest.length ? current : longest;
+  }, "");
+
+  return longestWord;
+}
+
+console.log(findLongestWord('The quick brown fox jumped over the lazy dog')); // jumped
+
+console.log(" === Return Largest Numbers in Arrays === ");
+function largestOfFour(arr) {
+  return arr.map(subArr => 
+    subArr.reduce((largest, current) => 
+      current > largest ? current : largest
+    )
+  );
+}
+let largArr = [[4, 5, 1, 3], [13, 27, 18, 26], [32, 35, 37, 39], [1000, 1001, 857, 1]];
+console.log(largArr, "largestOfFour()", largestOfFour(largArr));
+// [5, 27, 39, 1001]
+
+console.log(" === Check if a String Ends with the Given Target String === ");
+function confirmEnding(str, target) {
+  return new RegExp(`${target}$`).test(str);
+}
+console.log(confirmEnding('Bastian', 'n')); // true
+console.log(confirmEnding('Connor', 'n')); // false
+
+console.log(" === Array.prototype.join() === ");
+// The join() method creates and returns a new string 
+// by concatenating all of the elements in an array (or an array-like object), 
+// separated by commas or a specified separator string. 
+// If the array has only one item, then that item will be returned without using the separator. 
+// The default separator is a comma (,).
+const arr4 = ["a", "b", "c"];
+console.log(arr4.join("-"));  // "a-b-c"
+
+const nums = [1, 2, 3];
+console.log(nums.join(""));  // "123"
+
+console.log(nums.join(" * ")); // "1 * 2 * 3"
+
+// .join() → Array → String
+// .split() → String → Array
+
+console.log(" === Repeat a String Repeat a String === ");
+function repeatStringNumTimes(str, num) {
+  if (num <= 0) return "";
+  return Array(num + 1).join(str);
+}
+console.log(repeatStringNumTimes("abc", 3)); // "abcabcabc"
+console.log(repeatStringNumTimes("abc", 0)); // ""
+console.log(repeatStringNumTimes("abc", -2)); // ""
+
+console.log(" === Truncate a String === ");
+function truncateString(str, num) {
+  return str.length> num ? `${str.substring(0, num)}...` : str;
+}
+let str = "A-tisket a-tasket A green and yellow basket";
+console.log(str, "truncateString(str, 8): ", truncateString(str, 8));
+console.log(str, "truncateString(str, str.length): ", truncateString(str, str.length))
+
+console.log(" === Finders Keepers === ");
+function findElement(arr, func) {
+  return arr.find(func); // returns undefined if none match
+}
+
+console.log(findElement([1, 2, 3, 4], num => num % 2 === 0));  // find even number = 2
+console.log(findElement([1, 3, 5, 9], function(num) { return num % 2 === 0; })); // find even number = undefined
+console.log(findElement([1, 3, 5, 8, 9, 10], function(num) { return num % 2 === 0; })); // find even number = 8
+
+console.log(" === Boo who === ");
+function booWho(bool) {
+  return typeof bool == "boolean";
+}
+
+console.log(booWho(null));
+console.log(booWho(true));
+console.log(booWho([1, 2, 3]));
+console.log(booWho(1));
+console.log(booWho(-1));
+console.log(booWho(0));
+console.log(booWho("true"));
+
+console.log(" === Title Case a Sentence === ");
+function titleCase(str) {
+  return str
+    .toLowerCase() // normalize the whole string first
+    .split(" ")    // split into words
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // capitalize first + rest
+    .join(" ");    // join back into a sentence
+}
+
+console.log(titleCase("I'm a little tea pot")); 
+// → "I'm A Little Tea Pot"
+
+console.log(titleCase("sHoRt AnD sToUt")); 
+// → "Short And Stout"
+
+// Create an Array
+const fruits1 = ["Banana", "Orange", "Apple", "Mango"];
+console.log("fruits1: ", fruits1);
+
+console.log(" === splice() method === ");
+// array.splice(index, count, item1, ....., itemX)
+// splice() method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
+// At position 2, remove 2 items
+fruits1.splice(2, 2);
+console.log(fruits1); // ["Banana", "Orange"]
+
+console.log(" === slice() method === ");
+// array.slice(start, end)
+// slice() method returns a shallow copy of a portion of an array into a new array object.
+const citrus = fruits1.slice(1, 3);
+console.log(citrus); // ["Orange"]
+
+console.log(" === shift() method === ");
+// shift() method removes the first item of an array.
+fruits1.shift();
+console.log(fruits1); // ["Orange"]
+
+console.log(" === unshift() method === ");
+// unshift() method adds one or more items to the beginning of an array.
+fruits1.unshift("Lemon", "Pineapple");
+console.log(fruits1); // ["Lemon", "Pineapple", "Orange"]
+
+console.log(" === pop() method === ");
+// pop() method removes the last item of an array.
+fruits1.pop();
+console.log(fruits1); // ["Lemon", "Pineapple"]
+
+console.log(" === push() method === ");
+// push() method adds one or more items to the end of an array.
+fruits1.push("Kiwi");
+console.log(fruits1); // ["Lemon", "Pineapple", "Kiwi"]
+
+console.log(" === with() method === ");
+// The with() method returns a new array with some or all elements replaced by the given value. 
+// with(index, value)
+const months = ["Januar", "Februar", "Mar", "April"];
+// Replace element at index 2 ("Mar") with "March"
+const myMonths = months.with(2, "March");
+console.log("myMonths: ", myMonths); // ["Januar", "Februar", "March", "April"]
+console.log("months: ", months);   // ["Januar", "Februar", "Mar", "April"]
+
+function frankenSplice(arr1, arr2, n) {
+  // Copy arr2 to avoid mutating it
+  let arr2Copy = arr2.slice(); // shallow copy, create new array
+  // Insert all elements of arr1 at index n
+  arr2Copy.splice(n, 0, ...arr1); // spread arr1 elements
+  return arr2Copy;
+}
+
+// Test cases
+console.log(frankenSplice([1, 2, 3], [4, 5, 6], 1));
+// → [4, 1, 2, 3, 5, 6]
+
+console.log(frankenSplice([1, 2], ["a", "b"], 1));
+// → ["a", 1, 2, "b"]
+
+console.log(" === Falsy Bouncer === ");
+// Remove all falsy values from an array. 
+// Falsy values in JavaScript are false, null, 0, "", undefined, and NaN.
+function bouncer1(arr) {
+  return arr.filter(item => Boolean(item));
+}
+
+console.log(bouncer1([7, 'ate', '', false, 9]));
+
+const forbidden = [false, null, 0, "", undefined, NaN];
+function bouncer2(arr) {
+  return arr.filter(item => !forbidden.includes(item));
+}
+
+console.log(bouncer2([7, 'ate', '', false, 9]));
+// → [7, "ate", 9]
+
+console.log(" === findIndex === ");
+// arr.findIndex(callback(element, index, array))
+// The findIndex() method returns the index of the first element in an array that satisfies the provided testing function.
+const numbers = [10, 20, 30, 40];
+
+// Find the first number greater than 25
+const index = numbers.findIndex(num => num > 25);
+console.log(numbers, "findIndex num > 25 ", index); // 2  → numbers[2] is 30
+
+// If no element matches
+const notFound = numbers.findIndex(num => num > 50);
+console.log(numbers, "findIndex num > 50", notFound); // -1
+
+
+console.log(" === Where do I Belong === ");
+
+function getIndexToIns(arr, num) {
+  let sortedArr = arr.sort((a, b) => a - b);
+  let index = sortedArr.findIndex(item => num <= item);
+  return index !== -1 ? index : sortedArr.length;
+}
+
+console.log(getIndexToIns([40, 60], 50));
+console.log(getIndexToIns([20,3,5], 19));
+console.log(getIndexToIns([2, 5, 10], 15));
+console.log(getIndexToIns([1,2,3,4], 1.5));
+
+console.log(" === Mutations === ");
+// check if the string in the first element of the array contains all of the letters of the string in the second element of the array.
+// You can assume that the string in the first element of the array is always longer than the string in the second element.
+// The function should return true if all of the letters are present in the first string. 
+// Otherwise, it should return false.
+function mutation(arr) {
+  // convert both strings to lowercase
+  const [str1, str2] = arr.map(s => s.toLowerCase());
+  // check every letter in str2 is included in str1
+  return [...str2].every(letter => str1.includes(letter));
+}
+
+console.log(mutation(["hello", "hey"])); // false
+console.log(mutation(["hello", "Hello"])); // true
+console.log(mutation(["hello", "ll"])); // true
+console.log(mutation(["hello", "lll"])); // true
+console.log(mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])); // true
+console.log(mutation(["Mary", "Army"]));
+
+console.log(" === Chunky Monkey === ");
+// Write a function that splits an array (first argument) into groups the length of size (second argument) 
+// and returns them as a two-dimensional array.
+function chunkArrayInGroups(arr, size) {
+  console.log(arr, size)
+  let arrLength = arr.length;
+  if(arrLength === 0) return []; // base case: empty array
+  // playing with slice() to avoid mutating original array
+  return [arr.slice(0, size), ...chunkArrayInGroups(arr.slice(size), size)];
+}
+
+console.log(chunkArrayInGroups(['a', 'b', 'c', 'd'], 2));
+console.log(chunkArrayInGroups(['a', 'b', 'c', 'd'], 3));
+console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5], 3));
+console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5], 2));
+console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5], 4))
+
+console.log(" === Functional Programming === ");
+// Functional Programming
+// In Functional Programming, code is organized into smaller, basic functions that can be combined to build complex programs.
+// the core concepts of Functional Programming including 
+// pure functions, how to avoid mutations, and how to write cleaner code with methods like .map() and .filter()
+
+// Functional programming is a style of programming where solutions are simple, isolated functions, 
+// without any side effects outside of the function scope: INPUT -> PROCESS -> OUTPUT
+
+// Functional programming is about:
+// 1) Isolated functions 
+//    - there is no dependence on the state of the program, which includes global variables that are subject to change
+// 2) Pure functions 
+//    - the same input always gives the same output
+// 3) Functions with limited side effects 
+//    - any changes, or mutations, to the state of the program outside the function are carefully controlled
+
+// Lambda Function (a.k.a Arrow Function / Anonymous Function)
+// A lambda function is just a short, anonymous function, often written with => (arrow syntax).
+// Lambda functions: All the arrow functions (() => ...)
+
+// A first-order function is any regular function that:
+//  - Does not take another function as an argument, and
+//  - Does not return another function.
+// prepareGreenTea() and prepareBlackTea() are first-order functions.
+const prepareGreenTea = () => 'greenTea';
+const prepareBlackTea = () => 'blackTea';
+
+// A higher-order function is a function that takes another function as an argument or returns a function.
+// getTea is a higher-order function because it takes prepareTea (a function) as an argument.
+const getTea = (prepareTea, numOfCups) => {
+  const teaCups = [];
+
+  for(let cups = 1; cups <= numOfCups; cups += 1) {
+    const teaCup = prepareTea();
+    teaCups.push(teaCup);
+  }
+  return teaCups;
+};
+
+// A callback function is a function that is passed as an argument to another function and then executed inside that other function.
+// prepareGreenTea, prepareBlackTea is the callback
+// Callback functions: prepareGreenTea, prepareBlackTea (when passed to getTea)
+const tea4GreenTeamFCC = getTea(prepareGreenTea, 27);
+const tea4BlackTeamFCC = getTea(prepareBlackTea, 13);;
+
+console.log(
+  tea4GreenTeamFCC,
+  tea4BlackTeamFCC
+);
+
+// Callbacks are the functions that are slipped or passed into another function 
+//  to decide the invocation of that function. 
+// You may have seen them passed to other methods, 
+// for example in filter, the callback function tells JavaScript the criteria for how to filter an array.
+
+// They are functions that are passed into another function to be invoked later, 
+// based on the criteria defined in the function.
+// Functions that can be assigned to a variable, passed into another function, or returned from another function 
+// just like any other normal value, are called first class functions. 
+// In JavaScript, all functions are first class functions.
+
+// When functions are passed in to or returned from another function, 
+// then those functions which were passed in or returned can be called a lambda.
+
+// Understand the Hazards of Using Imperative Code
+// Functional programming is a good habit. It keeps your code easy to manage, and saves you from sneaky bugs.
+
+// In English (and many other languages), the imperative tense is used to give commands. 
+// Similarly, an imperative style in programming is one that gives the computer a set of statements to perform a task.
+// Often the statements change the state of the program, like updating global variables. 
+// A classic example is writing a for loop that gives exact directions to iterate over the indices of an array.
+// In contrast, functional programming is a form of declarative programming. 
+// You tell the computer what you want done by calling a method or function.
+
+// JavaScript offers many predefined methods that handle common tasks so you don't need to write out how the computer should perform them. 
+// For example, instead of using the for loop mentioned above, you could call the map method which handles the details of iterating over an array. 
+// This helps to avoid semantic errors, like the "Off By One Errors" that were covered in the Debugging section.
+// Off By One Errors are common in imperative code.
+// They happen when a loop iterates one time too many or one time too few. 
+// This can happen for a number of reasons, but often it is because the comparison operator in the terminating condition of the loop is incorrect. 
+// For example, if the comparison operator is <= instead of <, the loop will iterate one time too many. 
+// This can lead to unexpected behavior or errors.
+// using slice() instead of splice() to avoid mutating the original array
+
+// Avoid Mutations and Side Effects Using Functional Programming
+// A side effect is any application state change that is observable outside the called function other than its return value. 
+// This includes modifying any external variable or object property, logging to the console, writing to the DOM, etc. 
+// Functions that do not have any side effects are called pure functions.
+
+// A pure function's return value is only determined by its input values, without observable side effects. 
+// This means that a pure function must always return the same result if the same arguments are passed in. 
+// It also means that a pure function cannot modify any external state. 
+// This is very important in functional programming.
+
+console.log(" === Avoid Mutations and Side Effects Using Functional Programming === ");
+// In functional programming, 
+// - changing or altering things is called mutation, and
+// - the outcome is called a side effect. 
+// A function, ideally, should be a pure function, meaning that it does not cause any side effects.
+// The global variable
+let fixedValue = 4;
+
+function incrementer(num) {
+  return num+1;
+}
+
+console.log(incrementer(fixedValue)); // 5
+console.log(fixedValue);    // still 4 (unchanged)
+
+console.log(" === Pass Arguments to Avoid External Dependence in a Function === ")
+// Another principle of functional programming is to always declare your dependencies explicitly. 
+// This means if a function depends on a variable or object being present, 
+// then pass that variable or object directly into the function as an argument.
+
+// There are several good consequences from this principle. 
+// The function is easier to test, you know exactly what input it takes, and 
+// it won't depend on anything else in your program.
+
+// This can give you more confidence when you alter, remove, or add new code. 
+// You would know what you can or cannot change and you can see where the potential traps are.
+
+// Finally, the function would always produce the same output for the same set of inputs, no matter what part of the code executes it.
+
+// two distinct principles for functional programming:
+//  - Don't alter a variable or object 
+//     - create new variables and objects and return them if need be from a function. 
+//  - Declare function parameters 
+//     - any computation inside a function depends only on the arguments passed to the function, and not on any global object or variable.
+
+// The global variable
+const bookList = ["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"];
+
+function add(bookList, bookName) {
+  // create a new array, don't mutate
+  return [...bookList, bookName]; 
+  // OR return bookList.concat(bookName);
+}
+
+function remove(bookList, bookName) {
+  // return new array without the book
+  return bookList.filter(book => book !== bookName); 
+}
+
+console.log(" === Use the map Method to Extract Data from an Array === ");
+// use pure functions to avoid side effects in a program. 
+// Also, we have seen the value in having a function only depend on its input arguments.
+
+// functional programming is centered around a theory of functions.
+
+// It would make sense to be able to pass them as arguments to other functions, and 
+// return a function from another function. 
+// Functions are considered first class objects in JavaScript, 
+// which means they can be used like any other object. 
+// They can be saved in variables, stored in an object, or passed as function arguments.
+
+// The map method iterates over each item in an array and 
+// returns a new array containing the results of calling the callback function on each element. 
+// It does this without mutating the original array.
+
+// When the callback is used, it is passed three arguments. 
+// The first argument is the current element being processed. 
+// The second is the index of that element and 
+// the third is the array upon which the map method was called.
+
+let watchList = [
+  { Title: "Inception", Director: "Christopher Nolan", imdbRating: "8.8" },
+  { Title: "Interstellar", Director: "Christopher Nolan", imdbRating: "8.6" },
+  { Title: "Batman Begins", Director: "Christopher Nolan", imdbRating: "8.3" },
+  { Title: "Avatar", Director: "James Cameron", imdbRating: "7.9" }
+];
+
+// use map() to extract title and rating
+// use arrow function and implicit return
+// return array of objects with title and rating properties
+let ratings = watchList.map(item => ({ 
+  title: item.Title, 
+  rating: item.imdbRating 
+}));
+console.log(JSON.stringify(ratings));
+
+console.log(" === Implement map on a Prototype === ");
+// The Array.prototype.map() or map() method is a useful tool for creating a new array from an existing array. 
+// It is a higher-order function, meaning that it takes a function as an argument and
+// returns a new function. 
+
+// the map method returns an array of the same length as the one it was called on. 
+// It also doesn't alter the original array, as long as its callback function doesn't.
+
+// In other words, map is a pure function, and its output depends solely on its inputs. 
+// Plus, it takes another function as its argument.
+
+// Write your own Array.prototype.myMap(), which should behave exactly like Array.prototype.map().
+// You may use a for loop or the forEach method.
+Array.prototype.myMap = function(callback) {
+   const result = [];
+
+  for (let i = 0; i < this.length; i++) {
+    result.push(callback(this[i], i, this));
+  }
+
+  return result;
+};
+
+const numbers3 = [1, 2, 3];
+const doubled1 = numbers3.myMap(num => num * 2);
+
+console.log(doubled1); // [2, 4, 6]
+
+// Array.prototype.filter(), or simply filter().
+// filter calls a function on each element of an array and 
+// returns a new array containing only the elements for which that function returns a truthy value 
+// - that is, a value which returns true if passed to the Boolean() constructor. 
+// In other words, it filters the array, based on the function passed to it. 
+// Like map, it does this without needing to modify the original array.
+
+// The callback function accepts three arguments. 
+// The first argument is the current element being processed. 
+// The second is the index of that element and 
+// the third is the array upon which the filter method was called
+
+const filteredList = watchList
+  // Step 1: Keep only movies with rating >= 8.0
+  .filter(item => item.imdbRating >= 8.0)
+
+  // Step 2: Transform each movie into a smaller object with only {title, rating}
+  .map(item => ({
+    title: item.Title,
+    rating: item.imdbRating
+  }));
+console.log(filteredList);
+
+console.log(" === Implement the filter Method on a Prototype === ");
+// Write your own Array.prototype.myFilter(), which should behave exactly like Array.prototype.filter(). 
+// You may use a for loop or the forEach method.
+Array.prototype.myFilter = function(callback) {
+  const result = [];
+
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      result.push(this[i]);
+    }
+  }
+
+  return result;
+}
+
+console.log(" === Use the reduce Method to Analyze Data === ");
+// You can solve almost any array processing problem using the reduce method.
+
+// The reduce method allows for more general forms of array processing, and 
+// it's possible to show that both filter and 
+// map can be derived as special applications of reduce. 
+
+// The reduce method iterates over each item in an array and 
+// returns a single value (i.e. string, number, object, array). 
+// This is achieved via a callback function that is called on each iteration.
+
+// The callback function accepts four arguments. 
+// The first argument is known as the accumulator, 
+// which gets assigned the return value of the callback function from the previous iteration, 
+// the second is the current element being processed, 
+// the third is the index of that element and 
+// the fourth is the array upon which reduce is called.
+
+// In addition to the callback function, 
+// reduce has an additional parameter which takes an initial value for the accumulator. 
+// If this second parameter is not used, then the first iteration is skipped and
+// the second iteration gets passed the first element of the array as the accumulator.
+function getRating(watchList) {
+  const { sumR, countR } = watchList.reduce((accumulator, movie) => {
+    if (movie.Director === "Christopher Nolan") {
+      accumulator.sum += parseFloat(movie.imdbRating); // add rating
+      accumulator.countR += 1; // count how many Nolan movies
+    }
+    return accumulator;
+  }, { sumR: 0, countR: 0 });
+
+  return countR === 0 ? 0 : sumR / countR; // avoid divide by zero
+}
+console.log(getRating(watchList)); // 8.566666666666666
+
+const squareList = arr => {
+   return arr
+    .filter(num => num > 0 && Number.isInteger(num)) // only positive integers
+    .map(num => num * num); // square each
+};
+const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
+console.log(squaredIntegers);
+
+const globalArray = [5, 6, 3, 2, 9];
+function nonMutatingSort(arr) {
+  return [...arr].sort((a, b) => a - b); // copy first, then sort
+}
+console.log(nonMutatingSort(globalArray)); // [2, 3, 5, 6, 9]
+console.log(globalArray); // [5, 6, 3, 2, 9] (unchanged)
+
+function splitify(str) {
+  return str.split(/[^a-zA-Z0-9]+/);
+}
+console.log(splitify("Hello World,I-am code"));
+// Output: ["Hello", "World", "I", "am", "code"]
+
+function sentensify(str) {
+  return str.split("-").join(" ")
+}
+console.log(sentensify("May-the-force-be-with-you"));
+
+function sentensify(str) {
+  return str.split(/[^a-zA-Z0-9]+/).join(" ");
+}
+console.log(sentensify("May-the-force-be-with-you"));
+
+// Only change code below this line
+function urlSlug(title) {
+  return title
+    .trim()                    // remove leading/trailing spaces
+    .toLowerCase()             // convert to lowercase
+    .split(/\s+/)              // split by one or more spaces
+    .join('-');                // join with hyphens
+}
+// Only change code above this line
+
+console.log(urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone"));
+// Output: "a-mind-needs-books-like-a-sword-needs-a-whetstone"
+console.log(urlSlug("  Winter Is Coming"));
+
+function checkPositive1(arr) {
+  return arr.every(num => num>=0)
+}
+console.log(checkPositive1([1, 2, 3, -4, 5]));
+
+function checkPositive2(arr) {
+  return arr.some(num => num>=0)
+}
+console.log(checkPositive2([0, -1, -2, -3, -4, -5]));
+
+console.log(" === Introduction to Currying and Partial Application === ");
+// Currying is a process in functional programming in which 
+// we can transform a function with multiple arguments into a sequence of nesting functions that take 
+// one argument at a time.
+
+// In other words, instead of taking all arguments at one time, 
+// a curried function takes the first argument and 
+// returns a new function that takes the second argument and 
+// returns a new function that takes the third argument, and 
+// so on, until all arguments have been fulfilled.
+
+// The arity of a function is the number of arguments it requires.
+// Currying a function means to convert a function of N arity into N functions of arity 1.
+// In other words, it restructures a function so it takes one argument, 
+// then returns another function that takes the next argument, and so on.
+
+function unCurried(x, y) {
+  return x + y;
+}
+
+// example of currying
+// 1. using nested functions
+function curried1(x) {
+  return function(y) {
+    return x + y;
+  }
+}
+
+// 2. using arrow functions
+const curried2 = x => y => x + y
+
+// Both of the above two curried functions can be invoked in the same manner as shown below:
+console.log(curried1(1)(2)) // 3
+console.log(curried2(1)(2)) // 3
+
+const funcForY = curried1(1);
+console.log(funcForY(2)); // 3
+
+// Use Currying:
+// use currying in specific scenarios where it adds flexibility, clarity, or reusability to your code.
+// 1) When You Want Partial Application
+//  - Partial application means pre-filling some arguments of a function to create a new function.
+//  - Currying naturally supports this.
+const cmultiply1 = a => b => a * b;
+const cdouble1 = cmultiply1(2);  // partially applied
+console.log(cdouble1(5)); // 10
+
+// 2) When You Want to Compose Functions
+//  - Currying makes function composition easier because each function takes a single argument.
+//  - This is common in functional programming, especially with libraries like Ramda or Lodash/fp.
+const cadd = a => b => a + b;
+const cmultiply = a => b => a * b;
+const addThenMultiply = a => b => c => cmultiply(b)(cadd(a)(c));
+console.log(addThenMultiply(2)(3)(4)); // (4+2)*3 = 18
+console.log(addThenMultiply(5)(10)(-2)); // (-2+5)*10 = 30
+
+// 3) When You Want Higher Reusability
+//  - Currying allows you to create specialized versions of general-purpose functions.
+const log = level => message => console.log(`[${level}] ${message}`);
+const errorLog = log('ERROR');
+errorLog('Something went wrong'); // [ERROR] Something went wrong
+
+// 4) When Working with Functional Pipelines
+//  - Currying fits pipelines where functions are passed around as transformations.
+//  - Example: array.map, array.filter with curried predicates:
+const greaterThan = x => y => y > x;
+const numbers4 = [1, 2, 3, 4];
+console.log(numbers4.filter(greaterThan(2))); // [3,4]
+
+// 5. When You Want to Avoid Repeating Arguments
+// Currying can make repeated calls cleaner when an argument is shared across calls.
+const greet = greeting => name => `${greeting}, ${name}!`;
+const sayHello = greet('Hello');
+console.log(sayHello('Alice')); // Hello, Alice!
+console.log(sayHello('Bob'));   // Hello, Bob!
+
+// When NOT to Use Currying:
+// - When you don’t need partial application or function composition.
+// - When all arguments are always available at once.
+// - When readability suffers—overuse can make code harder for newcomers to understand.
+
+// 💡 Summary:
+// Use currying when you want flexibility, reusability, partial application, or functional composition. 
+// It’s especially powerful in pipelines, higher-order functions, or when building general utilities that you’ll specialize multiple times.
+
+// partial application can be described as applying a few arguments to a function at a time and
+// returning another function that is applied to more arguments. 
+function impartial(x, y, z) {
+  return x + y + z;
+}
+const partialFn = impartial.bind(this, 1, 2);
+partialFn(10); // 13
