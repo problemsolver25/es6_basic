@@ -1,6 +1,6 @@
-import add from "./export_default_math_functions.js";
-import hello, { uppercaseString , lowercaseString  } from './export_string_functions.js';
-import * as mathFunctions from "./export_math_functions.js";
+import add from "./export-default-math-functions.js";
+import hello, { uppercaseString , lowercaseString  } from './export-string-functions.js';
+import * as mathFunctions from "./export-math-functions.js";
 
 console.log(" === Import a Default Export === ")
 console.log("add()", add(7,4));
