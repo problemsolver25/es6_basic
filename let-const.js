@@ -63,3 +63,35 @@ function scopeExample() {
 }
 
 scopeExample();
+
+// IIFE — Immediately Invoked Function Expression.
+// The function is wrapped in parentheses () → makes it an expression
+// The trailing () invokes it immediately
+(function() {
+  console.log("This runs immediately!");
+})();
+
+// Arrow functon
+(() => {
+  console.log("IIFE with arrow function");
+})();
+
+// Why to use it ?
+// - Avoid polluting global scope
+// - Encapsulate code
+var a = 10;
+
+(function() {
+  var a = 20; // local to IIFE
+  console.log(a); // 20
+})();
+
+console.log(a); // 10
+
+// IIFEs are less common because modules already have their own scope
+// its used when you need immediate execution
+const result = (function(a, b) {
+  return a + b;
+})(5, 10);
+
+console.log(result); // 15
